@@ -43,6 +43,12 @@
  - set lbm.graphics.next_frame second arg to 30.0f from 10.0f
 
 */
+
+void full_body();
+void front_wing();
+void f1_merc();
+
+
 void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
 	//full_body();
 	front_wing();
