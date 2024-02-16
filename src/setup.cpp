@@ -2,8 +2,8 @@
 
 #include "info.hpp"
 
-#ifdef BENCHMARK
-void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK, optionally FP16S or FP16C
+//#ifdef BENCHMARK
+/*void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK, optionally FP16S or FP16C
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	uint mlups = 0u; {
 
@@ -32,7 +32,7 @@ void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK,
 	wait();
 #endif // Windows
 } /**/
-#endif // BENCHMARK
+//#endif // BENCHMARK
 
 // Co-Opting Stuff Into doing what we want to do, round 1
 // taking the Merc F1 W14 Demo and making it be our SAE car instead
@@ -103,7 +103,7 @@ void main_setup() { // Mercedes F1 W14 car; required extensions in defines.hpp: 
  - set lbm.graphics.next_frame second arg to 30.0f from 10.0f
 
 */
-/*void main_setup() { // Concorde; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 8000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 300.0f / 3.6f;
