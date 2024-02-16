@@ -49,14 +49,14 @@ void front_wing();
 void f1_merc();
 
 
-void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	full_body();
 	//front_wing();
 	//f1_merc();
 } /**/
 void full_body() { // entire car body
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 14000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 13000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 300.0f / 3.6f;
 	const float si_length = 62.0f, si_width = 26.0f;
 	const float si_T = 2.0f;
