@@ -50,13 +50,13 @@ void f1_merc();
 
 
 void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
-	//full_body();
-	front_wing();
+	full_body();
+	//front_wing();
 	//f1_merc();
 } /**/
 void full_body() { // entire car body
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 8000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 14000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 300.0f / 3.6f;
 	const float si_length = 62.0f, si_width = 26.0f;
 	const float si_T = 2.0f;
@@ -67,12 +67,12 @@ void full_body() { // entire car body
 	print_info("Re = " + to_string(to_uint(units.si_Re(si_width, si_u, si_nu))));
 	LBM lbm(lbm_N, 1u, 1u, 1u, units.nu(si_nu));
 	// ###################################################################################### define geometry ######################################################################################
-	const float3 center = float3(lbm.center().x, 0.52f * lbm_length, lbm.center().z + 0.03f * lbm_length);
-	//const float3x3 rotation = float3x3(float3(1, 0, 0), radians(180.0f)) * float3x3(float3(0, 0, 1), radians(90.0f)) * float3x3(float3(1, 0, 0), radians(180.0f));
-	const float3x3 rotation = float3x3(float3(1, 0, 0), radians(0.0f)) * float3x3(float3(0, 0, 1), radians(0.0f)) * float3x3(float3(1, 0, 0), radians(0.0f));
+	const float3 center = float3(lbm.center().x, 0.52f * lbm_length, lbm.center().z - 0.085f * lbm_length);
+	const float3x3 rotation = float3x3(float3(1, 0, 0), radians(180.0f)) * float3x3(float3(0, 0, 1), radians(90.0f)) * float3x3(float3(1, 0, 0), radians(180.0f));
+	//const float3x3 rotation = float3x3(float3(1, 0, 0), radians(0.0f)) * float3x3(float3(0, 0, 1), radians(0.0f)) * float3x3(float3(1, 0, 0), radians(0.0f));
 
 	//lbm.voxelize_stl(get_exe_path() + "stl/frontclipBinary7.stl", center, rotation, lbm_length * 0.7f); // https://www.thingiverse.com/thing:1176931/files
-	lbm.voxelize_stl(get_exe_path() + "stl/saeMaster2_BINARY_MeshLabbed.stl", center, rotation, lbm_length * 0.7f); // https://www.thingiverse.com/thing:1176931/files
+	lbm.voxelize_stl(get_exe_path() + "stl/saeMaster2_BINARY3.stl", center, rotation, lbm_length * 0.7f); // https://www.thingiverse.com/thing:1176931/files
 
 	const uint Nx = lbm.get_Nx(), Ny = lbm.get_Ny(), Nz = lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x = 0u, y = 0u, z = 0u; lbm.coordinates(n, x, y, z);
 	if (lbm.flags[n] != TYPE_S) lbm.u.y[n] = lbm_u;
@@ -105,7 +105,7 @@ void full_body() { // entire car body
 } /**/
 void front_wing() { // front wing only simulation for demo
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 8000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 5000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 300.0f / 3.6f;
 	const float si_length = 62.0f, si_width = 26.0f;
 	const float si_T = 2.0f;

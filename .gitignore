@@ -3,4 +3,5 @@ temp/
 stl/
 .vs/
 enc_temp_folder/
+videoOutput/
 FluidX3D.vcxproj.user
