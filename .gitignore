@@ -2,4 +2,5 @@ bin/
 temp/
 stl/
 .vs/
+enc_temp_folder/
 FluidX3D.vcxproj.user
