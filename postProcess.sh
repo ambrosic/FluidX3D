@@ -1,17 +1,28 @@
 #!/bin/bash
-
+#SBATCH --nodes=1 --ntasks=1
+#SBATCH --time=1:00:00
+#SBATCH --mem=14G
+# don't need GPUs for this lol
+##SBATCH --gres=gpu:2
+BASEDIR="PLACEHOLDER"
+# to execute this script from somewhere else, 
+if [[ -z "$SLURMD_NODENAME"]]; then
+    BASEDIR="$PWD"
+else
+    BASEDIR="$HOME/ambrosic/FluidX3D"
+fi
 # VARIABLES FOR SETUP
 # make sure not to have trailing slashes.
 # gets current working directory
-BASEDIR="$PWD"
-INPUTFOLDER="$PWD/bin/export"
+# BASEDIR="$PWD"
+INPUTFOLDER="$BASEDIR/bin/export"
 OUTFOLDERNAME="videoOutput"
 # everything below here shouldn't need tweaks...
 DIVIDER="=========================="
 # use date as a identifier so you don't have to rename all your mp4s all the time
 date=$(date '+%Y-%m-%d_%H_%M_%S')
 echo $date
-OUTPUTFOLDER="$PWD/$OUTFOLDERNAME/$date"
+OUTPUTFOLDER="$BASEDIR/$OUTFOLDERNAME/$date"
 mkdir -p "${OUTPUTFOLDER}"
 printf "RECURSIVE SUBDIR IN FOLDER: ${INPUTFOLDER} \nWITH OUTPUT TO:             ${OUTPUTFOLDER} \n$DIVIDER\nFolders to target:\n"
 cd $INPUTFOLDER
