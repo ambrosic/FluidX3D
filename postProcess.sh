@@ -31,9 +31,12 @@ cd $INPUTFOLDER
 find . -maxdepth 1 -mindepth 1 -type d -printf '%P\n'
 printf "GENERATING MP4 FILES \n$DIVIDER\n"
 for D in $(find . -maxdepth 1 -mindepth 1 -type d -printf '%P\n'); do
-    echo "starting {D}" && cd {D} && ffmpeg -hide_banner -loglevel error -framerate 30 -pattern_type glob -i "*.png" -c:v libx264 -pix_fmt yuv420p {D}.mp4 && echo "{D}.mp4 complete"
+    echo "starting {D}"
+    cd {D}
+    ffmpeg -hide_banner -loglevel error -framerate 30 -pattern_type glob -i "*.png" -c:v libx264 -pix_fmt yuv420p "${D}.mp4"
+    echo "{D}.mp4 complete"
     echo "moving {D}"
-    mv "$INPUTFOLDER/{D}/{D}.mp4" "$OUTPUTFOLDER/{D}.mp4"
+    mv "$INPUTFOLDER/{D}/{D}.mp4" "$OUTPUTFOLDER/${D}.mp4"
     echo "$DIVIDER"
 done
 
