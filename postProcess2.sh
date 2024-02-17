@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 #SBATCH --nodes=1 --ntasks=1 --cpus-per-task=16 --mem=32G 
 #SBATCH --time=1:00:00
 
@@ -13,8 +13,8 @@
 
 # VARIABLES FOR SETUP
 # this one's for testing locally
-# BASEDIR="$PWD"
-BASEDIR="$HOME/ambrosic/FluidX3D"
+BASEDIR="$PWD"
+# BASEDIR="$HOME/ambrosic/FluidX3D"
 
 # make sure not to have trailing slashes.
 INPUTFOLDER="$BASEDIR/bin/export"
@@ -28,21 +28,21 @@ echo $date
 OUTPUTFOLDER="$BASEDIR/$OUTFOLDERNAME/$date"
 # echo $OUTPUTFOLDER
 mkdir -p "${OUTPUTFOLDER}"
-echo "\nRECURSIVE SUBDIR IN FOLDER: ${INPUTFOLDER} \nWITH OUTPUT TO:             ${OUTPUTFOLDER} \n$DIVIDER\nFolders to target:\n"
+printf "\nRECURSIVE SUBDIR IN FOLDER: ${INPUTFOLDER} \nWITH OUTPUT TO:             ${OUTPUTFOLDER} \n$DIVIDER\nFolders to target:\n"
 cd $INPUTFOLDER
 # print folders
-find . -maxdepth 1 -mindepth 1 -type d -printf '%P\n'
+# find . -maxdepth 1 -mindepth 1 -type d -printf '%P\n'
 printf "GENERATING MP4 FILES \n$DIVIDER\n"
-for D in $(find . -maxdepth 1 -mindepth 1 -type d -printf '%P\n'); do
+for D in $(find ${INPUTFOLDER} -maxdepth 1 -mindepth 1 -type d -printf '%P\n'); do
     echo "$DIVIDER"
-    echo "starting ${D}"
-    cd "${INPUTFOLDER}/${D}"
-    # ls
-    ffmpeg -hide_banner -loglevel error -framerate 30 -pattern_type glob -i "*.png" -c:v libx264 -pix_fmt yuv420p "${D}.mp4"
-    echo "${D}.mp4 complete, moving file to output directory"
+    echo "starting ${INPUTFOLDER}/${D}"
+    # cd "${INPUTFOLDER}/${D}"
+    # ls "${INPUTFOLDER}/${D}/" | grep ".png"
+    ffmpeg -hide_banner -loglevel error -framerate 30 -pattern_type glob -i "${INPUTFOLDER}/${D}/*.png" -c:v libx264 -pix_fmt yuv420p "${OUTPUTFOLDER}/${D}.mp4"
+    # echo "${D}.mp4 complete, moving file to output directory"
     # echo "moving ${D}"
-    mv "$INPUTFOLDER/${D}/${D}.mp4" "$OUTPUTFOLDER/${D}.mp4"
-    echo "file moved"
+    # mv "$INPUTFOLDER/${D}/${D}.mp4" "$OUTPUTFOLDER/${D}.mp4"
+    # echo "file moved"
 done
 echo "$DIVIDER"
 # go back to base CWD
@@ -50,7 +50,7 @@ cd $BASEDIR
 
 # rename export folder so it's out of the way for the next job.
 # theoretically I could do this at the end of the CFD job?
-mv "${INPUTFOLDER}" "${INPUTFOLDER}-${DATE}"
+# mv "${INPUTFOLDER}" "${INPUTFOLDER}-${DATE}"
 # make moving happen in its own step
 # man am I thankful for stackOverflow
 # printf "$DIVIDER\nMOVING MP4 FILES\n"

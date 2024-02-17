@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # VARIABLES FOR SETUP
 # make sure not to have trailing slashes.
