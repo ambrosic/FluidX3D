@@ -38,6 +38,7 @@ for D in $(find ${INPUTFOLDER} -maxdepth 1 -mindepth 1 -type d -printf '%P\n'); 
     echo "starting ${INPUTFOLDER}/${D}"
     # cd "${INPUTFOLDER}/${D}"
     # ls "${INPUTFOLDER}/${D}/" | grep ".png"
+    echo "${INPUTFOLDER}/${D}/*.png ${OUTPUTFOLDER}/${D}.mp4"
     ffmpeg -hide_banner -loglevel error -framerate 30 -pattern_type glob -i "${INPUTFOLDER}/${D}/*.png" -c:v libx264 -pix_fmt yuv420p "${OUTPUTFOLDER}/${D}.mp4"
     # echo "${D}.mp4 complete, moving file to output directory"
     # echo "moving ${D}"
