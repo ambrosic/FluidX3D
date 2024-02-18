@@ -37,7 +37,7 @@ void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK,
 
 
 
-
+// pre-initialization thingy to make the compiler happy
 void full_body(uint vramMB);
 void front_wing(uint vramMB);
 void sae_1(uint vramMB);
@@ -77,6 +77,7 @@ void thermal_convection();
 
 #ifndef BENCHMARK
 void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	// this code won't run if BENCHMARK is not commented out in defines.hpp
 	const uint ram_megabytes = 12000u;
 	// harrierpigeon's modified functions
 	full_body(ram_megabytes);		// FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
