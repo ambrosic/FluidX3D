@@ -2,8 +2,8 @@
 
 #include "info.hpp"
 
-//#ifdef BENCHMARK
-/*void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK, optionally FP16S or FP16C
+#ifdef BENCHMARK
+void main_setup() { // benchmark; required extensions in defines.hpp: BENCHMARK, optionally FP16S or FP16C
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	uint mlups = 0u; {
 
@@ -32,9 +32,103 @@
 	wait();
 #endif // Windows
 } /**/
-//#endif // BENCHMARK
+#endif // BENCHMARK
 
 
+
+
+// pre-initialization thingy to make the compiler happy
+void full_body(uint vramMB);
+void front_wing(uint vramMB);
+void sae_1(uint vramMB);
+void vortices();
+void taylor_green();
+void poiseuille_flow();
+void stokes_drag();
+void cylinder_duct();
+void taylor_couette_flow();
+void lid_driven_cavity();
+void particle_test();
+void delta_wing();
+void nasa_common_model(uint vramMB);
+void concorde(uint vramMB);
+void boeing_747(uint vramMB);
+void x_wing(uint vramMB);
+void tie_fighter(uint vramMB);
+void fan_radial(uint vramMB);
+void fan_edf(uint vramMB);
+void cow_aero(uint vramMB);
+void space_shuttle(uint vramMB);
+void ahmed_body(uint vramMB);
+void cessna_172(uint vramMB);
+void bell_222(uint vramMB);
+void f1_merc(uint vramMB);
+void hydro_jump();
+void dam_break();
+void liquid_metal_speaker();
+void beach_waves();
+void river();
+void bubble(uint vramMB);
+void gravity_cube();
+void periodic_faucet();
+void droplet_collider();
+void rayleigh_benard();
+void thermal_convection();
+
+#ifndef BENCHMARK
+void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	// this code won't run if BENCHMARK is not commented out in defines.hpp
+	const uint ram_megabytes = 12000u;
+	// harrierpigeon's modified functions
+	full_body(ram_megabytes);		// FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//front_wing(ram_megabytes);	// FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//f1_merc(ram_megabytes);		//FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	
+	/*
+		Below are demos- more information can be found by jumping to the main function declaration.
+		If the program compiles and doesn't do anything, double-check and make sure that all the modules in defines.hpp you need are declared.
+	*/
+	// below are demos:
+	//vortices();						// INTERACTIVE_GRAPHICS
+	//taylor_green(); // INTERACTIVE_GRAPHICS
+	//poiseuille_flow(); // VOLUME_FORCE
+	//stokes_drag(); // FORCE_FIELD, EQUILIBRIUM_BOUNDARIES
+	//cylinder_duct(); // VOLUME_FORCE, INTERACTIVE_GRAPHICS
+	//taylor_couette_flow(); //MOVING_BOUNDARIES, INTERACTIVE_GRAPHICS
+	//lid_driven_cavity(); // MOVING_BOUNDARIES, INTERACTIVE_GRAPHICS
+	//particle_test(); // VOLUME_FORCE, FORCE_FIELD, MOVING_BOUNDARIES, PARTICLES, INTERACTIVE_GRAPHICS
+	//delta_wing(); // FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+
+	// functions below here require models to be downloaded from the internet and placed in the working directory.  See individual functions for more details.
+	//nasa_common_model(ram_megabytes); // FP16C, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+	//concorde(ram_megabytes); //FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+	//boeing_747(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//x_wing(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//tie_fighter(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//fan_radial(ram_megabytes); // FP16S, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//fan_edf(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//cow_aero(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//space_shuttle(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//ahmed_body(ram_megabytes); // FP16C, FORCE_FIELD, EQUILIBRIUM_BOUNDARIES, SUBGRID, optionally INTERACTIVE_GRAPHICS
+	//cessna_172(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//bell_222(ram_megabytes); // FP16C, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+	//f1_merc(ram_megabytes); // FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+
+	//demos of other capabilities- next functions do not require models:
+	//hydro_jump(); // FP16S, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
+	//dam_break(); // FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+	//liquid_metal_speaker(); // FP16S, VOLUME_FORCE, MOVING_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
+	//beach_waves(); // FP16S, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
+	//river(); // FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+	//bubble(ram_megabytes); // FP16C, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+	//gravity_cube(); // FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+	//periodic_faucet(); // FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+	//droplet_collider(); // FP16S, VOLUME_FORCE, FORCE_FIELD, SURFACE, INTERACTIVE_GRAPHICS
+	//rayleigh_benard(); // FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
+	//thermal_convection(); // FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
+
+} /**/
+#endif
 
 // Co-Opting Round Two
 // trying to get everything to run for longer
@@ -44,19 +138,9 @@
 
 */
 
-void full_body();
-void front_wing();
-void f1_merc();
-
-
-void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
-	full_body();
-	//front_wing();
-	//f1_merc();
-} /**/
-void full_body() { // entire car body
+void full_body(uint vramMB) { // entire car body
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 13000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 300.0f / 3.6f;
 	const float si_length = 62.0f, si_width = 26.0f;
 	const float si_T = 2.0f;
@@ -103,9 +187,10 @@ void full_body() { // entire car body
 	}
 	lbm.write_status();
 } /**/
-void front_wing() { // front wing only simulation for demo
+
+void front_wing(uint vramMB) { // front wing only simulation for demo
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), 5000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.75f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 300.0f / 3.6f;
 	const float si_length = 62.0f, si_width = 26.0f;
 	const float si_T = 2.0f;
@@ -156,9 +241,9 @@ void front_wing() { // front wing only simulation for demo
 // Co-Opting Stuff Into doing what we want to do, round 1
 // taking the Merc F1 W14 Demo and making it be our SAE car instead
 
-void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void sae_1(uint vramMB) { // Mercedes F1 W14 car; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), 10000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_u = 0.1f;
 	const float lbm_length = 0.8f * (float)lbm_N.y;
 	const float si_T = 0.25f;
@@ -217,7 +302,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // 3D Taylor-Green vortices; required extensions in defines.hpp: INTERACTIVE_GRAPHICS
+void vortices(/*uint vramMB*/) { // 3D Taylor-Green vortices; required extensions in defines.hpp: INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(128u, 128u, 128u, 1u, 1u, 1u, 0.01f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -240,7 +325,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // 2D Taylor-Green vortices (use D2Q9); required extensions in defines.hpp: INTERACTIVE_GRAPHICS
+void taylor_green() { // 2D Taylor-Green vortices (use D2Q9); required extensions in defines.hpp: INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(1024u, 1024u, 1u, 0.02f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -260,7 +345,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Poiseuille flow validation; required extensions in defines.hpp: VOLUME_FORCE
+void poiseuille_flow() { // Poiseuille flow validation; required extensions in defines.hpp: VOLUME_FORCE
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint R = 63u; // channel radius (default: 63)
 	const float umax = 0.1f; // maximum velocity in channel center (must be < 0.57735027f)
@@ -323,8 +408,8 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 } /**/
 
 
-
-/*void main_setup() { // Stokes drag validation; required extensions in defines.hpp: FORCE_FIELD, EQUILIBRIUM_BOUNDARIES
+#ifdef FORCE_FIELD
+void stokes_drag() { // Stokes drag validation; required extensions in defines.hpp: FORCE_FIELD, EQUILIBRIUM_BOUNDARIES
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint T = 100u; // check error every T steps
 	const float R = 32.0f; // sphere radius
@@ -366,10 +451,11 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 		E1 = E0;
 	}
 } /**/
+#endif
 
 
 
-/*void main_setup() { // cylinder in rectangular duct; required extensions in defines.hpp: VOLUME_FORCE, INTERACTIVE_GRAPHICS
+void cylinder_duct() { // cylinder in rectangular duct; required extensions in defines.hpp: VOLUME_FORCE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const float Re = 25000.0f;
 	const float D = 64.0f;
@@ -390,7 +476,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Taylor-Couette flow; required extensions in defines.hpp: MOVING_BOUNDARIES, INTERACTIVE_GRAPHICS
+void taylor_couette_flow() { // Taylor-Couette flow; required extensions in defines.hpp: MOVING_BOUNDARIES, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(96u, 96u, 192u, 1u, 1u, 1u, 0.04f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -414,7 +500,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // lid-driven cavity; required extensions in defines.hpp: MOVING_BOUNDARIES, INTERACTIVE_GRAPHICS
+void lid_driven_cavity() { // lid-driven cavity; required extensions in defines.hpp: MOVING_BOUNDARIES, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint L = 128u;
 	const float Re = 1000.0f;
@@ -430,8 +516,8 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 } /**/
 
 
-
-/*void main_setup() { // particle test; required extensions in defines.hpp: VOLUME_FORCE, FORCE_FIELD, MOVING_BOUNDARIES, PARTICLES, INTERACTIVE_GRAPHICS
+#ifdef PARTICLES
+void particle_test() { // particle test; required extensions in defines.hpp: VOLUME_FORCE, FORCE_FIELD, MOVING_BOUNDARIES, PARTICLES, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint L = 128u;
 	const float Re = 1000.0f;
@@ -451,10 +537,10 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE|VIS_STREAMLINES|VIS_PARTICLES;
 	lbm.run();
 } /**/
+#endif
 
 
-
-/*void main_setup() { // delta wing; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+void delta_wing() { // delta wing; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint L = 128u;
 	const float Re = 100000.0f;
@@ -476,9 +562,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // NASA Common Research Model; required extensions in defines.hpp: FP16C, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+void nasa_common_model(uint vramMB) { // NASA Common Research Model; required extensions in defines.hpp: FP16C, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.5f, 2.0f, 1.5f/3.5f), 11500u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.5f, 2.0f, 1.5f/3.5f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float Re = 10000000.0f;
 	const float u = 0.1f;
 	LBM lbm(lbm_N, units.nu_from_Re(Re, (float)lbm_N.x, u));
@@ -515,9 +601,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Concorde; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
+void concorde(uint vramMB) { // Concorde; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.5f), 2084u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 3.0f, 0.5f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 300.0f/3.6f;
 	const float si_length=62.0f, si_width=26.0f;
 	const float si_T = 1.0f;
@@ -530,7 +616,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	// ###################################################################################### define geometry ######################################################################################
 	const float3 center = float3(lbm.center().x, 0.52f*lbm_length, lbm.center().z+0.03f*lbm_length);
 	const float3x3 rotation = float3x3(float3(1, 0, 0), radians(-10.0f))*float3x3(float3(0, 0, 1), radians(90.0f))*float3x3(float3(1, 0, 0), radians(90.0f));
-	lbm.voxelize_stl(get_exe_path()+"../stl/concord_cut_large.stl", center, rotation, lbm_length); // https://www.thingiverse.com/thing:1176931/files
+	lbm.voxelize_stl(get_exe_path()+"/stl/concord_cut_large.stl", center, rotation, lbm_length); // https://www.thingiverse.com/thing:1176931/files
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
 		if(lbm.flags[n]!=TYPE_S) lbm.u.y[n] = lbm_u;
 		if(x==0u||x==Nx-1u||y==0u||y==Ny-1u||z==0u||z==Nz-1u) lbm.flags[n] = TYPE_E; // all non periodic
@@ -562,9 +648,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Boeing 747; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void boeing_747(uint vramMB) { // Boeing 747; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), 880u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_Re = 1000000.0f;
 	const float lbm_u = 0.1f;
 	const uint lbm_T = 10000u;
@@ -573,7 +659,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	const float size = 1.0f*lbm.size().x;
 	const float3 center = float3(lbm.center().x, 0.55f*size, lbm.center().z);
 	const float3x3 rotation = float3x3(float3(1, 0, 0), radians(-15.0f));
-	lbm.voxelize_stl(get_exe_path()+"../stl/techtris_airplane.stl", center, rotation, size); // https://www.thingiverse.com/thing:2772812/files
+	lbm.voxelize_stl(get_exe_path()+"/stl/techtris_airplane.stl", center, rotation, size); // https://www.thingiverse.com/thing:2772812/files
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
 		if(lbm.flags[n]!=TYPE_S) lbm.u.y[n] = lbm_u;
 		if(x==0u||x==Nx-1u||y==0u||y==Ny-1u||z==0u||z==Nz-1u) lbm.flags[n] = TYPE_E; // all non periodic
@@ -593,9 +679,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Star Wars X-wing; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void x_wing(uint vramMB) { // Star Wars X-wing; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), 880u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_Re = 100000.0f;
 	const float lbm_u = 0.1f;
 	const uint lbm_T = 50000u;
@@ -604,7 +690,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	const float size = 1.0f*lbm.size().x;
 	const float3 center = float3(lbm.center().x, 0.55f*size, lbm.center().z);
 	const float3x3 rotation = float3x3(float3(0, 0, 1), radians(180.0f));
-	lbm.voxelize_stl(get_exe_path()+"../stl/X-Wing.stl", center, rotation, size); // https://www.thingiverse.com/thing:353276/files
+	lbm.voxelize_stl(get_exe_path()+"/stl/X-Wing.stl", center, rotation, size); // https://www.thingiverse.com/thing:353276/files
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
 		if(lbm.flags[n]!=TYPE_S) lbm.u.y[n] = lbm_u;
 		if(x==0u||x==Nx-1u||y==0u||y==Ny-1u||z==0u||z==Nz-1u) lbm.flags[n] = TYPE_E; // all non periodic
@@ -632,9 +718,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Star Wars TIE fighter; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void tie_fighter(uint vramMB) { // Star Wars TIE fighter; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 1.0f), 1760u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 1.0f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_Re = 100000.0f;
 	const float lbm_u = 0.125f;
 	const uint lbm_T = 50000u;
@@ -643,7 +729,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	const float size = 0.65f*lbm.size().x;
 	const float3 center = float3(lbm.center().x, 0.6f*size, lbm.center().z);
 	const float3x3 rotation = float3x3(float3(1, 0, 0), radians(90.0f));
-	Mesh* mesh = read_stl(get_exe_path()+"../stl/DWG_Tie_Fighter_Assembled_02.stl", lbm.size(), center, rotation, size); // https://www.thingiverse.com/thing:2919109/files
+	Mesh* mesh = read_stl(get_exe_path()+"/stl/DWG_Tie_Fighter_Assembled_02.stl", lbm.size(), center, rotation, size); // https://www.thingiverse.com/thing:2919109/files
 	lbm.voxelize_mesh_on_device(mesh);
 	lbm.flags.read_from_device();
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
@@ -675,9 +761,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // radial fan; required extensions in defines.hpp: FP16S, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void fan_radial(uint vramMB) { // radial fan; required extensions in defines.hpp: FP16S, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(3.0f, 3.0f, 1.0f), 181u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(3.0f, 3.0f, 1.0f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_Re = 100000.0f;
 	const float lbm_u = 0.12f;
 	const uint lbm_T = 48000u;
@@ -687,7 +773,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	const float radius = 0.25f*(float)lbm_N.x;
 	const float3 center = float3(lbm.center().x, lbm.center().y, 0.36f*radius);
 	const float lbm_omega=lbm_u/radius, lbm_domega=lbm_omega*lbm_dt;
-	Mesh* mesh = read_stl(get_exe_path()+"../stl/FAN_Solid_Bottom.stl", lbm.size(), center, 2.0f*radius); // https://www.thingiverse.com/thing:6113/files
+	Mesh* mesh = read_stl(get_exe_path()+"/stl/FAN_Solid_Bottom.stl", lbm.size(), center, 2.0f*radius); // https://www.thingiverse.com/thing:6113/files
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
 		if(x==0u||x==Nx-1u||y==0u||y==Ny-1u||z==0u) lbm.flags[n] = TYPE_S; // all non periodic
 	}); // ####################################################################### run simulation, export images and data ##########################################################################
@@ -708,9 +794,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // electric ducted fan (EDF); required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void fan_edf(uint vramMB) { // electric ducted fan (EDF); required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 1.5f, 1.0f), 8000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 1.5f, 1.0f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_Re = 1000000.0f;
 	const float lbm_u = 0.1f;
 	const uint lbm_T = 180000u;
@@ -719,8 +805,8 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	// ###################################################################################### define geometry ######################################################################################
 	const float3 center = lbm.center();
 	const float3x3 rotation = float3x3(float3(0, 0, 1), radians(180.0f));
-	Mesh* stator = read_stl(get_exe_path()+"../stl/edf_v39.stl", 1.0f, rotation); // https://www.thingiverse.com/thing:3014759/files
-	Mesh* rotor = read_stl(get_exe_path()+"../stl/edf_v391.stl", 1.0f, rotation); // https://www.thingiverse.com/thing:3014759/files
+	Mesh* stator = read_stl(get_exe_path()+"/stl/edf_v39.stl", 1.0f, rotation); // https://www.thingiverse.com/thing:3014759/files
+	Mesh* rotor = read_stl(get_exe_path()+"/stl/edf_v391.stl", 1.0f, rotation); // https://www.thingiverse.com/thing:3014759/files
 	const float scale = 0.98f*stator->get_scale_for_box_fit(lbm.size()); // scale stator and rotor to simulation box size
 	stator->scale(scale);
 	rotor->scale(scale);
@@ -751,9 +837,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // aerodynamics of a cow; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void cow_aero(uint vramMB) { // aerodynamics of a cow; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 1.0f), 1000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 1.0f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float si_u = 1.0f;
 	const float si_length = 2.4f;
 	const float si_T = 10.0f;
@@ -765,7 +851,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	LBM lbm(lbm_N, units.nu(si_nu));
 	// ###################################################################################### define geometry ######################################################################################
 	const float3x3 rotation = float3x3(float3(1, 0, 0), radians(180.0f))*float3x3(float3(0, 0, 1), radians(180.0f));
-	Mesh* mesh = read_stl(get_exe_path()+"../stl/Cow_t.stl", lbm.size(), lbm.center(), rotation, lbm_length); // https://www.thingiverse.com/thing:182114/files
+	Mesh* mesh = read_stl(get_exe_path()+"/stl/Cow_t.stl", lbm.size(), lbm.center(), rotation, lbm_length); // https://www.thingiverse.com/thing:182114/files
 	mesh->translate(float3(0.0f, 1.0f-mesh->pmin.y+0.1f*lbm_length, 1.0f-mesh->pmin.z)); // move mesh forward a bit and to simulation box bottom, keep in mind 1 cell thick box boundaries
 	lbm.voxelize_mesh_on_device(mesh);
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
@@ -787,20 +873,22 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 } /**/
 
 
-
-/*void main_setup() { // Space Shuttle; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+#ifdef FP16S
+void space_shuttle(uint vramMB) { // Space Shuttle; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 4.0f, 0.8f), 1000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 4.0f, 0.8f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_Re = 10000000.0f;
 	const float lbm_u = 0.1f;
 	const uint lbm_T = 108000u;
+	// added this because it was throwing an error, value may be incorrectly calculated...
+	const float si_T = 0.25f;
 	LBM lbm(lbm_N, 2u, 4u, 1u, units.nu_from_Re(lbm_Re, (float)lbm_N.x, lbm_u)); // run on 2x4x1 = 8 GPUs
 	// ###################################################################################### define geometry ######################################################################################
 	const float size = 1.25f*lbm.size().x;
 	const float3 center = float3(lbm.center().x, 0.55f*size, lbm.center().z+0.05f*size);
 	const float3x3 rotation = float3x3(float3(1, 0, 0), radians(-20.0f))*float3x3(float3(0, 0, 1), radians(270.0f));
 	Clock clock;
-	lbm.voxelize_stl(get_exe_path()+"../stl/Full_Shuttle.stl", center, rotation, size); // https://www.thingiverse.com/thing:4975964/files
+	lbm.voxelize_stl(get_exe_path()+"/stl/Full_Shuttle.stl", center, rotation, size); // https://www.thingiverse.com/thing:4975964/files
 	println(print_time(clock.stop()));
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
 		if(lbm.flags[n]!=TYPE_S) lbm.u.y[n] = lbm_u;
@@ -824,20 +912,21 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.run();
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS
 } /**/
+#endif
 
-
-
-/*void main_setup() { // Starship; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+#ifdef EQUILIBRIUM_BOUNDARIES
+void starship(uint vramMB) { // Starship; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 2.0f), 1000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 2.0f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_Re = 10000000.0f;
 	const float lbm_u = 0.05f;
 	const uint lbm_T = 108000u;
+	const float si_T = 0.25f;
 	LBM lbm(lbm_N, 1u, 1u, 1u, units.nu_from_Re(lbm_Re, (float)lbm_N.x, lbm_u));
 	// ###################################################################################### define geometry ######################################################################################
 	const float size = 1.6f*lbm.size().x;
 	const float3 center = float3(lbm.center().x, lbm.center().y+0.05f*size, 0.18f*size);
-	lbm.voxelize_stl(get_exe_path()+"../stl/StarShipV2.stl", center, size); // https://www.thingiverse.com/thing:4912729/files
+	lbm.voxelize_stl(get_exe_path()+"/stl/StarShipV2.stl", center, size); // https://www.thingiverse.com/thing:4912729/files
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
 		if(lbm.flags[n]!=TYPE_S) lbm.u.z[n] = lbm_u;
 		if(x==0u||x==Nx-1u||y==0u||y==Ny-1u||z==0u||z==Nz-1u) lbm.flags[n] = TYPE_E; // all non periodic
@@ -862,12 +951,13 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.run();
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS
 } /**/
+#endif
 
 
-
-/*void main_setup() { // Ahmed body; required extensions in defines.hpp: FP16C, FORCE_FIELD, EQUILIBRIUM_BOUNDARIES, SUBGRID, optionally INTERACTIVE_GRAPHICS
+#ifdef VOLUME_FORCE
+void ahmed_body(uint vramMB) { // Ahmed body; required extensions in defines.hpp: FP16C, FORCE_FIELD, EQUILIBRIUM_BOUNDARIES, SUBGRID, optionally INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint memory = 10000u; // available VRAM of GPU(s) in MB
+	const uint memory = vramMB; // available VRAM of GPU(s) in MB
 	const float lbm_u = 0.05f;
 	const float box_scale = 6.0f;
 	const float si_u = 60.0f;
@@ -885,7 +975,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	const float lbm_length = units.x(si_length);
 	LBM lbm(lbm_N, lbm_nu);
 	// ###################################################################################### define geometry ######################################################################################
-	Mesh* mesh = read_stl(get_exe_path()+"../stl/ahmed_25deg_m.stl", lbm.size(), lbm.center(), float3x3(float3(0, 0, 1), radians(90.0f)), lbm_length);
+	Mesh* mesh = read_stl(get_exe_path()+"/stl/ahmed_25deg_m.stl", lbm.size(), lbm.center(), float3x3(float3(0, 0, 1), radians(90.0f)), lbm_length);
 	mesh->translate(float3(0.0f, units.x(0.5f*(0.5f*box_scale*si_length-si_width))-mesh->pmin.y, 1.0f-mesh->pmin.z));
 	lbm.voxelize_mesh_on_device(mesh, TYPE_S|TYPE_X); // https://github.com/nathanrooy/ahmed-bluff-body-cfd/blob/master/geometry/ahmed_25deg_m.stl converted to binary
 	const uint Nx=lbm.get_Nx(), Ny=lbm.get_Ny(), Nz=lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x=0u, y=0u, z=0u; lbm.coordinates(n, x, y, z);
@@ -922,12 +1012,13 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	}
 	//lbm.write_status(path);
 } /**/
+#endif
 
 
 
-/*void main_setup() { // Cessna 172 propeller aircraft; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void cessna_172(uint vramMB) { // Cessna 172 propeller aircraft; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 0.8f, 0.25f), 8000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 0.8f, 0.25f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_u = 0.1f;
 	const float lbm_width = 0.95f*(float)lbm_N.x;
 	const uint lbm_dt = 4u; // revoxelize rotor every dt time steps
@@ -940,8 +1031,8 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	print_info(to_string(si_T, 3u)+" seconds = "+to_string(units.t(si_T))+" time steps");
 	LBM lbm(lbm_N, units.nu(si_nu));
 	// ###################################################################################### define geometry ######################################################################################
-	Mesh* plane = read_stl(get_exe_path()+"../stl/Cessna-172-Skyhawk-body.stl"); // https://www.thingiverse.com/thing:814319/files
-	Mesh* rotor = read_stl(get_exe_path()+"../stl/Cessna-172-Skyhawk-rotor.stl"); // plane and rotor separated with Microsoft 3D Builder
+	Mesh* plane = read_stl(get_exe_path()+"/stl/Cessna-172-Skyhawk-body.stl"); // https://www.thingiverse.com/thing:814319/files
+	Mesh* rotor = read_stl(get_exe_path()+"/stl/Cessna-172-Skyhawk-rotor.stl"); // plane and rotor separated with Microsoft 3D Builder
 	const float scale = lbm_width/plane->get_bounding_box_size().x; // scale plane and rotor to simulation box size
 	plane->scale(scale);
 	rotor->scale(scale);
@@ -977,9 +1068,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Bell 222 helicopter; required extensions in defines.hpp: FP16C, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void bell_222(uint vramMB) { // Bell 222 helicopter; required extensions in defines.hpp: FP16C, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 1.2f, 0.3f), 8000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 1.2f, 0.3f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_u = 0.16f;
 	const float lbm_length = 0.8f*(float)lbm_N.x;
 	const float si_T = 0.34483f; // 2 revolutions of the main rotor
@@ -990,9 +1081,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	units.set_m_kg_s(lbm_length, lbm_u, 1.0f, si_length, si_u, si_rho);
 	LBM lbm(lbm_N, 1u, 1u, 1u, units.nu(si_nu));
 	// ###################################################################################### define geometry ######################################################################################
-	Mesh* body = read_stl(get_exe_path()+"../stl/Bell-222-body.stl"); // https://www.thingiverse.com/thing:1625155/files
-	Mesh* main = read_stl(get_exe_path()+"../stl/Bell-222-main.stl"); // body and rotors separated with Microsoft 3D Builder
-	Mesh* back = read_stl(get_exe_path()+"../stl/Bell-222-back.stl");
+	Mesh* body = read_stl(get_exe_path()+"/stl/Bell-222-body.stl"); // https://www.thingiverse.com/thing:1625155/files
+	Mesh* main = read_stl(get_exe_path()+"/stl/Bell-222-main.stl"); // body and rotors separated with Microsoft 3D Builder
+	Mesh* back = read_stl(get_exe_path()+"/stl/Bell-222-back.stl");
 	const float scale = lbm_length/body->get_bounding_box_size().y; // scale body and rotors to simulation box size
 	body->scale(scale);
 	main->scale(scale);
@@ -1041,9 +1132,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
+void f1_merc(uint vramMB) { // Mercedes F1 W14 car; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), 4000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(1.0f, 2.0f, 0.5f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_u = 0.1f;
 	const float lbm_length = 0.8f*(float)lbm_N.y;
 	const float si_T = 0.25f;
@@ -1054,9 +1145,9 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	print_info("Re = "+to_string(to_uint(units.si_Re(si_width, si_u, si_nu))));
 	LBM lbm(lbm_N, 1u, 1u, 1u, units.nu(si_nu));
 	// ###################################################################################### define geometry ######################################################################################
-	Mesh* body = read_stl(get_exe_path()+"../stl/mercedesf1-body.stl"); // https://downloadfree3d.com/3d-models/vehicles/sports-car/mercedes-f1-w14/
-	Mesh* front_wheels = read_stl(get_exe_path()+"../stl/mercedesf1-front-wheels.stl"); // wheels separated, decals removed and converted to .stl in Microsoft 3D Builder
-	Mesh* back_wheels = read_stl(get_exe_path()+"../stl/mercedesf1-back-wheels.stl"); // to avoid instability from too small gaps: remove front wheel fenders and move out right back wheel a bit
+	Mesh* body = read_stl(get_exe_path()+"/stl/mercedesf1-body.stl"); // https://downloadfree3d.com/3d-models/vehicles/sports-car/mercedes-f1-w14/
+	Mesh* front_wheels = read_stl(get_exe_path()+"/stl/mercedesf1-front-wheels.stl"); // wheels separated, decals removed and converted to .stl in Microsoft 3D Builder
+	Mesh* back_wheels = read_stl(get_exe_path()+"/stl/mercedesf1-back-wheels.stl"); // to avoid instability from too small gaps: remove front wheel fenders and move out right back wheel a bit
 	const float scale = lbm_length/body->get_bounding_box_size().y; // scale parts
 	body->scale(scale);
 	front_wheels->scale(scale);
@@ -1102,7 +1193,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // hydraulic jump; required extensions in defines.hpp: FP16S, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
+void hydro_jump() { // hydraulic jump; required extensions in defines.hpp: FP16S, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(96u, 352u, 96u, 1u, 1u, 1u, 0.007f, 0.0f, 0.0f, -0.0005f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1129,7 +1220,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // dam break; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+void dam_break() { // dam break; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(128u, 256u, 256u, 0.005f, 0.0f, 0.0f, -0.0002f, 0.0001f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1143,7 +1234,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // liquid metal on a speaker; required extensions in defines.hpp: FP16S, VOLUME_FORCE, MOVING_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
+void liquid_metal_speaker() { // liquid metal on a speaker; required extensions in defines.hpp: FP16S, VOLUME_FORCE, MOVING_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint L = 128u;
 	const float u = 0.09f; // peak velocity of speaker membrane
@@ -1185,7 +1276,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // breaking waves on beach; required extensions in defines.hpp: FP16S, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
+void beach_waves() { // breaking waves on beach; required extensions in defines.hpp: FP16S, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const float f = 0.001f; // make smaller
 	const float u = 0.12f; // peak velocity of speaker membrane
@@ -1224,7 +1315,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // river; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+void river() { // river; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(128u, 384u, 96u, 0.02f, 0.0f, -0.00007f, -0.0005f, 0.01f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1244,8 +1335,8 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 } /**/
 
 
-
-/*void main_setup() { // raindrop impact; required extensions in defines.hpp: FP16C, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS or GRAPHICS
+#ifdef VOLUME_FORCE
+void raindrop_impact() { // raindrop impact; required extensions in defines.hpp: FP16C, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint3 lbm_N = resolution(float3(1.0f, 1.0f, 0.85f), 4000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	float lbm_D = (float)lbm_N.x/5.0f;
@@ -1322,12 +1413,13 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.run();
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS
 } /**/
+#endif
 
 
-
-/*void main_setup() { // bursting bubble; required extensions in defines.hpp: FP16C, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+#ifdef VOLUME_FORCE
+void bubble(uint vramMB) { // bursting bubble; required extensions in defines.hpp: FP16C, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
-	const uint3 lbm_N = resolution(float3(4.0f, 4.0f, 3.0f), 1000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
+	const uint3 lbm_N = resolution(float3(4.0f, 4.0f, 3.0f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_d = 0.25f*(float)lbm_N.x; // bubble diameter in LBM units
 	const float lbm_sigma = 0.0003f; // surface tension coefficient in LBM units
 	const float si_nu = 1E-6f; // kinematic shear viscosity (water) [m^2/s]
@@ -1363,10 +1455,10 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.graphics.visualization_modes = lbm.get_D()==1u ? VIS_PHI_RAYTRACE : VIS_PHI_RASTERIZE;
 	lbm.run();
 } /**/
+#endif
 
 
-
-/*void main_setup() { // cube with changing gravity; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+void gravity_cube() { // cube with changing gravity; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(96u, 96u, 96u, 0.02f, 0.0f, 0.0f, -0.001f, 0.001f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1392,7 +1484,7 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 
 
 
-/*void main_setup() { // periodic faucet mass conservation test; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+void periodic_faucet() { // periodic faucet mass conservation test; required extensions in defines.hpp: FP16S, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(96u, 192u, 128u, 0.02f, 0.0f, 0.0f, -0.001f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1408,8 +1500,8 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 } /**/
 
 
-
-/*void main_setup() { // two colliding droplets in force field; required extensions in defines.hpp: FP16S, VOLUME_FORCE, FORCE_FIELD, SURFACE, INTERACTIVE_GRAPHICS
+#ifdef FORCE_FIELD
+void droplet_collider() { // two colliding droplets in force field; required extensions in defines.hpp: FP16S, VOLUME_FORCE, FORCE_FIELD, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(256u, 256u, 128u, 0.014f, 0.0f, 0.0f, 0.0f, 0.0001f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1430,10 +1522,10 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.graphics.visualization_modes = lbm.get_D()==1u ? VIS_PHI_RAYTRACE : VIS_PHI_RASTERIZE;
 	lbm.run();
 } /**/
+#endif
 
-
-
-/*void main_setup() { // Rayleigh-Benard convection; required extensions in defines.hpp: FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
+#ifdef SUBGRID
+void rayleigh_benard() { // Rayleigh-Benard convection; required extensions in defines.hpp: FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(256u, 256u, 64u, 0.02f, 0.0f, 0.0f, -0.001f, 0.0f, 1.0f, 1.0f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1457,10 +1549,10 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE|VIS_STREAMLINES;
 	lbm.run();
 } /**/
+#endif
 
-
-
-/*void main_setup() { // thermal convection; required extensions in defines.hpp: FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
+#ifdef TEMPERATURE
+void thermal_convection() { // thermal convection; required extensions in defines.hpp: FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(32u, 196u, 60u, 1u, 1u, 1u, 0.02f, 0.0f, 0.0f, -0.001f, 0.0f, 1.0f, 1.0f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1479,3 +1571,4 @@ void f1_merc() { // Mercedes F1 W14 car; required extensions in defines.hpp: FP1
 	lbm.run();
 	//lbm.run(1000u); lbm.u.read_from_device(); println(lbm.u.x[lbm.index(Nx/2u, Ny/2u, Nz/2u)]); wait(); // test for binary identity
 } /**/
+#endif
