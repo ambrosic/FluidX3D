@@ -5,3 +5,4 @@ stl/
 enc_temp_folder/
 videoOutput/
 FluidX3D.vcxproj.user
+.VSCodeCounter/
