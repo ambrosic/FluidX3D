@@ -13,9 +13,9 @@
 
 # VARIABLES FOR SETUP
 # this one's for testing locally
-BASEDIR="$PWD"
-# BASEDIR="$HOME/ambrosic/FluidX3D"
-
+#BASEDIR="$PWD"
+BASEDIR="$HOME/ambrosic/FluidX3D"
+printf "PWD's Working Directory: ${PWD}\nBASEDIR:${BASEDIR}"
 # make sure not to have trailing slashes.
 INPUTFOLDER="$BASEDIR/bin/export"
 OUTFOLDERNAME="videoOutput"

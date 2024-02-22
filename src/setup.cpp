@@ -168,7 +168,7 @@ void full_body(uint vramMB) { // entire car body
 	while (lbm.get_t() <= units.t(si_T)) { // main simulation loop
 #if defined(GRAPHICS) && !defined(INTERACTIVE_GRAPHICS)
 		lbm.write_status(std::to_string(lbm.get_t()) + " of " + std::to_string(si_T));
-		if (lbm.graphics.next_frame(units.t(si_T), 30.0f)) {
+		if (lbm.graphics.next_frame(units.t(si_T), 40.0f)) {
 			lbm.graphics.set_camera_free(float3(0.491343f * (float)Nx, -0.882147f * (float)Ny, 0.564339f * (float)Nz), -78.0f, 6.0f, 22.0f);
 			lbm.graphics.write_frame(get_exe_path() + "export/front/");
 			lbm.graphics.set_camera_free(float3(1.133361f * (float)Nx, 1.407077f * (float)Ny, 1.684411f * (float)Nz), 72.0f, 12.0f, 20.0f);
