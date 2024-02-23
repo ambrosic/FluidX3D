@@ -78,7 +78,7 @@ void thermal_convection();
 #ifndef BENCHMARK
 void main_setup() { // SR24 Test Bed; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	// this code won't run if BENCHMARK is not commented out in defines.hpp
-	const uint ram_megabytes = 12000u;
+	const uint ram_megabytes = 14000u;
 	// harrierpigeon's modified functions
 	full_body(ram_megabytes);		// FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 	//front_wing(ram_megabytes);	// FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
@@ -156,7 +156,7 @@ void full_body(uint vramMB) { // entire car body
 	//const float3x3 rotation = float3x3(float3(1, 0, 0), radians(0.0f)) * float3x3(float3(0, 0, 1), radians(0.0f)) * float3x3(float3(1, 0, 0), radians(0.0f));
 
 	//lbm.voxelize_stl(get_exe_path() + "stl/frontclipBinary7.stl", center, rotation, lbm_length * 0.7f); // https://www.thingiverse.com/thing:1176931/files
-	lbm.voxelize_stl(get_exe_path() + "stl/saeMaster2_BINARY3.stl", center, rotation, lbm_length * 0.7f); // https://www.thingiverse.com/thing:1176931/files
+	lbm.voxelize_stl(get_exe_path() + "stl/saeMaster3_BINARY.stl", center, rotation, lbm_length * 0.7f); // https://www.thingiverse.com/thing:1176931/files
 
 	const uint Nx = lbm.get_Nx(), Ny = lbm.get_Ny(), Nz = lbm.get_Nz(); parallel_for(lbm.get_N(), [&](ulong n) { uint x = 0u, y = 0u, z = 0u; lbm.coordinates(n, x, y, z);
 	if (lbm.flags[n] != TYPE_S) lbm.u.y[n] = lbm_u;
@@ -955,7 +955,7 @@ void starship(uint vramMB) { // Starship; required extensions in defines.hpp: FP
 
 
 #ifdef VOLUME_FORCE
-void ahmed_body(uint vramMB) { // Ahmed body; required extensions in defines.hpp: FP16C, FORCE_FIELD, EQUILIBRIUM_BOUNDARIES, SUBGRID, optionally INTERACTIVE_GRAPHICS
+/*void ahmed_body(uint vramMB) { // Ahmed body; required extensions in defines.hpp: FP16C, FORCE_FIELD, EQUILIBRIUM_BOUNDARIES, SUBGRID, optionally INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint memory = vramMB; // available VRAM of GPU(s) in MB
 	const float lbm_u = 0.05f;
@@ -1336,7 +1336,7 @@ void river() { // river; required extensions in defines.hpp: FP16S, VOLUME_FORCE
 
 
 #ifdef VOLUME_FORCE
-void raindrop_impact() { // raindrop impact; required extensions in defines.hpp: FP16C, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS or GRAPHICS
+/*void raindrop_impact() { // raindrop impact; required extensions in defines.hpp: FP16C, VOLUME_FORCE, EQUILIBRIUM_BOUNDARIES, SURFACE, INTERACTIVE_GRAPHICS or GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint3 lbm_N = resolution(float3(1.0f, 1.0f, 0.85f), 4000u); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	float lbm_D = (float)lbm_N.x/5.0f;
@@ -1417,7 +1417,7 @@ void raindrop_impact() { // raindrop impact; required extensions in defines.hpp:
 
 
 #ifdef VOLUME_FORCE
-void bubble(uint vramMB) { // bursting bubble; required extensions in defines.hpp: FP16C, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
+/*void bubble(uint vramMB) { // bursting bubble; required extensions in defines.hpp: FP16C, VOLUME_FORCE, SURFACE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	const uint3 lbm_N = resolution(float3(4.0f, 4.0f, 3.0f), vramMB); // input: simulation box aspect ratio and VRAM occupation in MB, output: grid resolution
 	const float lbm_d = 0.25f*(float)lbm_N.x; // bubble diameter in LBM units
@@ -1524,8 +1524,9 @@ void droplet_collider() { // two colliding droplets in force field; required ext
 } /**/
 #endif
 
-#ifdef SUBGRID
-void rayleigh_benard() { // Rayleigh-Benard convection; required extensions in defines.hpp: FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
+#ifdef VOLUME_FORCE
+#ifdef TEMPERATURE
+/*void rayleigh_benard() { // Rayleigh-Benard convection; required extensions in defines.hpp: FP16S, VOLUME_FORCE, TEMPERATURE, INTERACTIVE_GRAPHICS
 	// ################################################################## define simulation box size, viscosity and volume force ###################################################################
 	LBM lbm(256u, 256u, 64u, 0.02f, 0.0f, 0.0f, -0.001f, 0.0f, 1.0f, 1.0f);
 	// ###################################################################################### define geometry ######################################################################################
@@ -1549,6 +1550,7 @@ void rayleigh_benard() { // Rayleigh-Benard convection; required extensions in d
 	lbm.graphics.visualization_modes = VIS_FLAG_LATTICE|VIS_STREAMLINES;
 	lbm.run();
 } /**/
+#endif
 #endif
 
 #ifdef TEMPERATURE
