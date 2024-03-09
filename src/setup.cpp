@@ -1,7 +1,7 @@
 #include "setup.hpp"
+#include "info.hpp"
 
 #ifdef BENCHMARK
-#include "info.hpp"
 void main_setup()
 { // benchmark; required extensions in defines.hpp: BENCHMARK, optionally FP16S or FP16C
     // ################################################################## define simulation box size, viscosity and volume force ###################################################################
@@ -36,6 +36,7 @@ void main_setup()
 } /**/
 #endif // BENCHMARK
 
+
 #ifndef BENCHMARK
 void full_body(uint vramMB);
 void front_wing(uint vramMB);
@@ -50,9 +51,8 @@ void main_setup()
     // front_wing(ram_megabytes);
     // sae_1(ram_megabytes);
 }
-#endif
 
-#ifndef BENCHMARK
+
 void full_body(uint vramMB) // Requires FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 {                           // entire car body
     // ################################################################## define simulation box size, viscosity and volume force ###################################################################
@@ -111,9 +111,7 @@ void full_body(uint vramMB) // Requires FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BO
     }
     lbm.write_status();
 } /**/
-#endif
 
-#ifndef BENCHMARK
 
 /*void front_wing(uint vramMB) // FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
 { // front wing only simulation for demo
@@ -173,10 +171,10 @@ void full_body(uint vramMB) // Requires FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BO
     }
     lbm.write_status();
 } /**/
-#endif
+
+
 // Co-Opting Stuff Into doing what we want to do, round 1
 // taking the Merc F1 W14 Demo and making it be our SAE car instead
-#ifndef BENCHMARK
 /*void sae_1(uint vramMB)
 { // Mercedes F1 W14 car; required extensions in defines.hpp: FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BOUNDARIES, SUBGRID, INTERACTIVE_GRAPHICS or GRAPHICS
     // ################################################################## define simulation box size, viscosity and volume force ###################################################################
@@ -240,6 +238,7 @@ void full_body(uint vramMB) // Requires FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BO
 #endif // GRAPHICS && !INTERACTIVE_GRAPHICS
 } /**/
 #endif // benchmark
+
 /*void main_setup() { // 3D Taylor-Green vortices
     // ######################################################### define simulation box size, viscosity and volume force ############################################################################
     LBM lbm(128u, 128u, 128u, 1u, 1u, 1u, 0.01f);
@@ -1290,40 +1289,3 @@ void full_body(uint vramMB) // Requires FP16S, EQUILIBRIUM_BOUNDARIES, MOVING_BO
 } /**/
 
 #endif // TEMPERATURE
-#else  // BENCHMARK
-#include "info.hpp"
-void main_setup()
-{ // benchmark
-    uint mlups = 0u;
-    { // ######################################################## define simulation box size, viscosity and volume force ###########################################################################
-        // LBM lbm( 32u,  32u,  32u, 1.0f);
-        // LBM lbm( 48u,  48u,  48u, 1.0f);
-        // LBM lbm( 64u,  64u,  64u, 1.0f);
-        // LBM lbm( 96u,  96u,  96u, 1.0f);
-        // LBM lbm(128u, 128u, 128u, 1.0f);
-        // LBM lbm(192u, 192u, 192u, 1.0f);
-        LBM lbm(256u, 256u, 256u, 1.0f);
-        // LBM lbm(384u, 384u, 384u, 1.0f);
-        // LBM lbm(464u, 464u, 464u, 1.0f);
-        // LBM lbm(480u, 480u, 480u, 1.0f);
-        // LBM lbm(512u, 512u, 512u, 1.0f);
-
-        // const uint memory = 1488u; // in MB
-        // const uint L = ((uint)cbrt(fmin((float)memory*1048576.0f/(19.0f*(float)sizeof(fpxx)+17.0f), (float)max_uint))/2u)*2u;
-        // LBM lbm(1u*L, 1u*L, 1u*L, 1u, 1u, 1u, 1.0f); // 1 GPU
-        // LBM lbm(2u*L, 1u*L, 1u*L, 2u, 1u, 1u, 1.0f); // 2 GPUs
-        // LBM lbm(2u*L, 2u*L, 1u*L, 2u, 2u, 1u, 1.0f); // 4 GPUs
-        // LBM lbm(2u*L, 2u*L, 2u*L, 2u, 2u, 2u, 1.0f); // 8 GPUs
-        //  #########################################################################################################################################################################################
-        for (uint i = 0u; i < 1000u; i++)
-        {
-            lbm.run(10u);
-            mlups = max(mlups, to_uint((double)lbm.get_N() * 1E-6 / info.dt_smooth));
-        }
-    } // make lbm object go out of scope to free its memory
-    print_info("Peak MLUPs/s = " + to_string(mlups));
-#if defined(_WIN32)
-    wait();
-#endif // Windows
-} /**/
-#endif // BENCHMARK
